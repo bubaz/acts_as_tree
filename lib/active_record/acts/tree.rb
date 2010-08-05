@@ -90,6 +90,21 @@ module ActiveRecord
         def self_and_siblings
           parent ? parent.children : self.class.roots
         end
+
+        def all_children(arr = [])
+          self.children.each do |child|
+            arr.push child
+            child.all_children arr
+          end
+         arr
+        end
+
+       def self_and_all_children(arr = [])
+         arr.push self
+         self.all_children arr
+         arr
+       end
+
       end
     end
   end
